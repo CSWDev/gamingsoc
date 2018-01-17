@@ -77,6 +77,7 @@
         <div class="col-sm-3">
             <a href="register.php"><input type="button" class="button" value="Add Users"></a>
         </div>
+
     </div>
 </div><br>
 <div class="container">
@@ -85,10 +86,8 @@
     <div class="row">
         <div class="col-sm-3">
             <input type="button" class="button" value="Password Reset">
-
         </div>
         <div class="col-sm-4">
-
         </div>
         <div class="col-sm-4">
 

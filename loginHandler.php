@@ -43,7 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST")
                     //echo "hi " . $_SESSION['Firstname']. " ". $_SESSION['Lastname']. " " . $_SESSION['Role'];
                     header("location: userProfile.php");
                 } elseif ($row['role'] == 'Admin'){
-                    //Create var to hold value = gets data from the row same as user according to the name of the column
+                    //Create var to hold value = gets data from ookthe row same as user according to the name of the column
                     $studentNumber = $row['studentID'];
                     //creates a session var that can be used anywhere after this method runs and puts the value of the var inside
                     $_SESSION['StudentID'] = $studentNumber;
