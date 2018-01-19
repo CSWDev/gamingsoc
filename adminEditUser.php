@@ -7,11 +7,17 @@
     include 'conn.php';
     $users = "SELECT * FROM users";
     $usersResult = mysqli_query($conn, $users);
-    $stuID = $_POST['stu'];
-    $populate = "SELECT * FROM users WHERE studentID='$stuID'";
-    $populating = mysqli_query($conn, $populate);
-
-
+    if (isset($stuID))
+    {
+        $stuID = $_POST['stu'];
+        $populate = "SELECT * FROM users WHERE studentID='$stuID'";
+        $populating = mysqli_query($conn, $populate);
+    } else
+    {
+        $stuID = null;
+        $populate = "SELECT * FROM users WHERE studentID='$stuID'";
+        $populating = mysqli_query($conn, $populate);
+    }
     ?>
 </head>
 <body>
@@ -73,86 +79,71 @@
         </div>
     </div>
 </div>
-<div class="container">
+<form class="container">
     <h3>Edit Account</h3>
     <hr>
     <div class="row">
         <div class="col-sm-3">
-            <?php
-            echo "<select name='stu'>";
-            while ($row = mysqli_fetch_array($usersResult))
-            {
-                echo "<option value='" . $row[0] . "'>" . $row[0] . "</option>";
-            }
-            echo "</select>";
-            ?>
+            <form class="form-search" action="" method="post">
+                <?php
+                    echo "<select name='stu'>";
+                    while ($row = mysqli_fetch_array($usersResult))
+                    {
+                        echo "<option value='" . $row[0] . "'>" . $row[0] . "</option>";
+                    }
+                    echo "</select>";
+
+                    ?>
+                <button class="btn btn-lg btn-primary btn-block btn-contact" type="submit" value="Retrieve"
+                        onclick="">Retrieve
+                </button>
+            </form>
             <br>
             <span id="reauth-email" class="reauth-email"></span>
             <br>
-            <?php while ($row2 = mysqli_fetch_array($populating)):; ?>
-            <input type="text" name="stu" id="inputFname" class="form-control"
-                   placeholder="<?php echo $row2[0]; ?>" required autofocus>
-            <br>
-            <input type="email" name="studentEmail" id="inputEmail" class="form-control" placeholder="" required
-                   autofocus>
-            <br>
-            <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required
-                   autofocus>
-            <br>
-            <input type="text" name="firstname" id="inputFname" class="form-control" placeholder="Firstname" required
-                   autofocus>
-            <br>
-            <input type="text" name="lastname" id="inputLname" class="form-control" placeholder="Lastname" required
-                   autofocus>
-            <br>
-            <input type="text" name="info" id="inputInfo" class="form-control" placeholder="Info" required autofocus>
-            <br>
-            <input type="text" name="role" id="inputRole" class="form-control" placeholder="Role" required autofocus>
-            <br>
-            <?php endwhile; ?>
+            <form class="form-data" action="" method="">
+            <?php
+
+            while ($row = mysqli_fetch_array($populating)):;
+                ?>
+                <input type="text" name="stu" id="inputFname" class="form-control"
+                       placeholder="<?php echo $row[0]; ?>" required autofocus>
+                <br>
+                <input type="email" name="studentEmail" id="inputEmail" class="form-control" placeholder="" required
+                       autofocus>
+                <br>
+                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address"
+                       required
+                       autofocus>
+                <br>
+                <input type="text" name="firstname" id="inputFname" class="form-control" placeholder="Firstname"
+                       required
+                       autofocus>
+                <br>
+                <input type="text" name="lastname" id="inputLname" class="form-control" placeholder="Lastname" required
+                       autofocus>
+                <br>
+                <input type="text" name="info" id="inputInfo" class="form-control" placeholder="Info" required
+                       autofocus>
+                <br>
+                <input type="text" name="role" id="inputRole" class="form-control" placeholder="Role" required
+                       autofocus>
+                <br>
+            <?php endwhile;
+            ?>
             <button class="btn btn-lg btn-primary btn-block btn-contact" type="submit" value="Send"
-                    onclick="myFunction()">Send
+                    onclick="myFunction()">Update
             </button>
+            </form>
         </div>
+    </div>
+</form>
         <div class="col-sm-3">
 
         </div>
     </div>
 </div>
 <br>
-<div class="container">
-    <h3>Delete Account</h3>
-    <hr>
-    <div class="row">
-        <div class="col-sm-3">
-            <br>
-            <form class="form-deleteUser" action="deleteUser.php" method="post">
-                <input type="text" name="studentID" id="input" class="form-control"
-                       placeholder="Enter student ID to delete" required autofocus>
-                <br>
-                <button class="btn btn-lg btn-primary btn-block btn-contact" type="submit" value="Send"
-                        id="Authorisation">Delete
-                </button>
-                <!-- The Modal -->
-                <div id="myModal" class="modal">
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <span class="close">&times;</span>
-                            <h2>Authorisation Required</h2>
-                        </div>
-                        <div class="modal-body">
-                            <input type="password" name="password" id="input" class="form-control"
-                                   placeholder="Enter password to confirm action!" required autofocus>
-                        </div>
-                        <div class="modal-footer">
-                            <button>Confirm</button>
-                        </div>
-            </form>
-        </div>
-
-    </div>
-</div>
 <div class="col-sm-3">
 </div>
 <br>
@@ -164,33 +155,6 @@
 
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
-    <script>
-        // Get the modal
-        var modal = document.getElementById('myModal');
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("Authorisation");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal
-        btn.onclick = function () {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function () {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function (event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
 </footer>
 
 </body>
