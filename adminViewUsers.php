@@ -95,10 +95,11 @@
                     <td><?php echo $row['lastname']; ?></td>
                     <td><?php echo $row['info']; ?></td>
                     <td><?php echo $row['role']; ?></td>
+                    <td><a href="adminEditUser.php?edit_id=<?php echo $row['studentID'];?>" alt="edit"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><a href="adminDeleteUser.php?edit_id=<?php echo $row['studentID'];?>" alt="Delete"><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
                 <?php endwhile; ?>
             </table>
-        <a href="adminEditUser.php"><button>Edit a user</button></a>
         <a href="adminDeleteUser.php"><button>Delete a user</button></a>
 
     </div>
@@ -111,22 +112,42 @@
             <tr>
                 <th>Student ID</th>
                 <th>Student Email</th>
+                <th>Email</th>
                 <th>First Name</th>
                 <th>Last Name</th>
-                <th>Position</th>
+                <th>Info</th>
                 <th>Role</th>
             </tr>
             <?php while ($row1 = mysqli_fetch_array($adminResult)):; ?>
                 <tr>
-                    <td><?php echo $row1[0]; ?></td>
-                    <td><?php echo $row1[2]; ?></td>
-                    <td><?php echo $row1[4]; ?></td>
-                    <td><?php echo $row1[5]; ?></td>
-                    <td><?php echo $row1[6]; ?></td>
-                    <td><?php echo $row1[7]; ?></td>
+                    <td><?php echo $row1['studentID']; ?></td>
+                    <td><?php echo $row1['studentEmail']; ?></td>
+                    <td><?php echo $row1['email']; ?></td>
+                    <td><?php echo $row1['firstname']; ?></td>
+                    <td><?php echo $row1['lastname']; ?></td>
+                    <td><?php echo $row1['info']; ?></td>
+                    <td><?php echo $row1['role']; ?></td>
+                    <td><a href="adminEditUser.php?edit_id=<?php echo $row1['studentID'];?>" alt="edit"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><a href="adminDeleteUser.php?edit_id=<?php echo $row1['studentID'];?>" alt="Delete"><span class="glyphicon glyphicon-remove"></span></a></td>
+
                 </tr>
             <?php endwhile; ?>
         </table>
+        <!-- The Modal -->
+        <div id="myModal" class="modal">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="close">&times;</span>
+                    <h2>Authorisation Required</h2>
+                </div>
+                <div class="modal-body">
+                    <input type="password" name="password" id="input" class="form-control"
+                           placeholder="Enter password to confirm action!" required autofocus>
+                </div>
+                <div class="modal-footer">
+                    <button>Confirm</button>
+                </div>
     </div>
 </div><br>
     </div>
@@ -144,6 +165,33 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </footer>
+<script>
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("Authorisation");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 
 </body>
 </html>

@@ -1,24 +1,42 @@
+<?php
+include 'conn.php';
+session_start();
+$id = $_GET['edit_id'];
+
+if (isset($_GET['edit_id']))
+{
+    $id = $_GET['edit_id'];
+    $sql = "SELECT * FROM users WHERE studentID='$id'";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_array($result,MYSQLI_ASSOC);
+    if (!$result) {
+        printf("Error: %s\n", mysqli_error($conn));
+        exit();
+    }
+}
+if (isset($_POST['btn-update']))
+{
+    $stuEmail = $_POST['studentEmail'];
+    $email = $_POST['email'];
+    $firstname = $_POST['firstname'];
+    $lastname = $_POST['lastname'];
+    $info = $_POST['Info'];
+    $role = $_POST['role'];
+    $update = "UPDATE users SET studentEmail='$stuEmail', email='$email', firstname='$firstname', lastname='$lastname', info='$info', role='$role' WHERE studentID='$id'";
+    $up = mysqli_query($conn, $update);
+    if (!isset($sql))
+    {
+        die("Error" . mysqli_connect_error());
+    } else
+    {
+        header("refresh:1.5; url=adminViewUsers.php");
+    }
+}
+    ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Admin Panel</title>
-    <?Php
-    session_start();
-    include 'conn.php';
-    $users = "SELECT * FROM users";
-    $usersResult = mysqli_query($conn, $users);
-    if (isset($stuID))
-    {
-        $stuID = $_POST['stu'];
-        $populate = "SELECT * FROM users WHERE studentID='$stuID'";
-        $populating = mysqli_query($conn, $populate);
-    } else
-    {
-        $stuID = null;
-        $populate = "SELECT * FROM users WHERE studentID='$stuID'";
-        $populating = mysqli_query($conn, $populate);
-    }
-    ?>
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -72,90 +90,63 @@
         <div class="col-sm-2 sidenav">
         </div>
         <div class="col-sm-8 text-left">
-            <h1>Account Management</h1>
+            <h1>Edit Management</h1>
             <hr>
         </div>
         <div class="col-sm-2 ">
         </div>
     </div>
 </div>
-<form class="container">
-    <h3>Edit Account</h3>
-    <hr>
-    <div class="row">
-        <div class="col-sm-3">
-            <form class="form-search" action="" method="post">
-                <?php
-                    echo "<select name='stu'>";
-                    while ($row = mysqli_fetch_array($usersResult))
-                    {
-                        echo "<option value='" . $row[0] . "'>" . $row[0] . "</option>";
-                    }
-                    echo "</select>";
-
-                    ?>
-                <button class="btn btn-lg btn-primary btn-block btn-contact" type="submit" value="Retrieve"
-                        onclick="">Retrieve
-                </button>
-            </form>
+<div class="container">
+    <div class="col-sm-offset-2 col-sm-6">
+        <div class="card card-container text-center">
             <br>
-            <span id="reauth-email" class="reauth-email"></span>
-            <br>
-            <form class="form-data" action="" method="">
-            <?php
+            <img id="profile-img" class="profile-img-card " src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"  />
+            <p id="profile-name" class="profile-name-card"></p>
+            <form class="form-register" method="post" action="">
+                <span id="reauth-email" class="reauth-email"></span>
+                <br>
+                <input type="email" name="studentEmail" id="inputStudentNum" class="form-control" placeholder="student email" value="<?php echo $row['studentEmail'];?>" required autofocus>
+                <br>
+                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="email" value="<?php echo $row['email'];?>" required autofocus>
+                <br>
+                <input type="text" name="firstname" id="inputFirstname" class="form-control" placeholder="Firstname" value="<?php echo $row['firstname'];?>" required autofocus>
+                <br>
+                <input type="text" name="lastname" id="inputLastname" class="form-control" placeholder="Lastname" value="<?php echo $row['lastname'];?>" required autofocus>
+                <br>
+                <input type="text" name="Info" id="inputLastname" class="form-control" placeholder="Info" value="<?php echo $row['info'];?>" required autofocus>
+                <br>
+                <select name="role" class="form-control" required autofocus>
+                    <option value="Admin">Admin</option>
+                    <option value="Member">Member</option>
+                </select>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block btn-update" name="btn-update" id="btn-update" type="submit" onclick="update()">Register</button>
+                <br>
+                <a href="adminViewUsers.php"><button class="btn btn-lg btn-primary btn-block btn-cancel" name="btn-cancel" id="btn-cancel">Cancel</button></a>
 
-            while ($row = mysqli_fetch_array($populating)):;
-                ?>
-                <input type="text" name="stu" id="inputFname" class="form-control"
-                       placeholder="<?php echo $row[0]; ?>" required autofocus>
-                <br>
-                <input type="email" name="studentEmail" id="inputEmail" class="form-control" placeholder="" required
-                       autofocus>
-                <br>
-                <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address"
-                       required
-                       autofocus>
-                <br>
-                <input type="text" name="firstname" id="inputFname" class="form-control" placeholder="Firstname"
-                       required
-                       autofocus>
-                <br>
-                <input type="text" name="lastname" id="inputLname" class="form-control" placeholder="Lastname" required
-                       autofocus>
-                <br>
-                <input type="text" name="info" id="inputInfo" class="form-control" placeholder="Info" required
-                       autofocus>
-                <br>
-                <input type="text" name="role" id="inputRole" class="form-control" placeholder="Role" required
-                       autofocus>
-                <br>
-            <?php endwhile;
-            ?>
-            <button class="btn btn-lg btn-primary btn-block btn-contact" type="submit" value="Send"
-                    onclick="myFunction()">Update
-            </button>
+                <div class="col-sm-4"></div>
             </form>
         </div>
     </div>
-</form>
-        <div class="col-sm-3">
+</div>
+</body>
 
-        </div>
-    </div>
-</div>
-<br>
-<div class="col-sm-3">
-</div>
-<br>
+
 <footer class="container-fluid text-center">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </footer>
-
-</body>
+<script>
+function update(){
+    var x;
+    if (confirm("Updated Successfully") == true){
+            x="update";
+    }
+}
+</script>
 </html>

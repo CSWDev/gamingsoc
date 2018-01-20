@@ -20,17 +20,7 @@ $addUser = "INSERT INTO users (studentID, studentEmail ,email, pass, firstname, 
 
 
 
-//if(isset($email) && isset($password)) //etc
-//if ($password == $password2)
-//Those two lines will make sure everything is inputted
-//as for the error when inserting into the database, Google the code for those two commands and make sure they're right
-//in terms of how you think they work
-// the html makes the user input those values so i probably wont be needing if ^
-// ALWAYS need client and server side, it's good practice
 
-
-//    Looking at where the project is stored, you was using the PHPStorm view, no XAMPP
-//{
 $checkEmail = "SELECT * FROM users WHERE email='$email'";
 $em_Result = mysqli_query($conn, $checkEmail);
 $em_Row = mysqli_fetch_array($em_Result, MYSQLI_ASSOC);
@@ -51,32 +41,24 @@ if ($em_Count == 1)
     header("refresh:1.5; url=register.php");
 } else
 {
-    define("RECAPTCHA_SECRET", "6Le6iTgUAAAAANCFTQgZjUbQjxagxdbWp_cjEOMN");
-    $recaptcha_response = $_POST["g-recaptcha-response"];
-    $response = json_decode(file_get_contents('https://www.google.com/recaptcha/api/siteverify?secret=' . RECAPTCHA_SECRET . '&response=' . $recaptcha_response));
-
     if (isset($password) === isset($password2))
     {
-        If ($response->success === true)
+        if ($conn->query($addUser) === true)
         {
-            if ($conn->query($addUser) === true)
-            {
-                echo "Successful";
-                header("refresh:1.5; url=adminViewUsers.php");
-                exit();
-            } else
-            {
-                echo "Failed";
-                header("refresh:1.5; url=register.php");
-                exit();
-            }
+            echo "Successful";
+            header("refresh:1.5; url=adminViewUsers.php");
+            exit();
         } else
         {
-            echo "connection failed";
+            echo "Failed";
+            header("refresh:1.5; url=register.php");
+            exit();
         }
     } else
     {
-        echo 'Pass is dead';
+        echo "connection failed";
     }
+
 }
+
 mysqli_close($conn);

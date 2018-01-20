@@ -79,21 +79,7 @@
                 <button class="btn btn-lg btn-primary btn-block btn-contact" type="submit" value="Send"
                         id="Authorisation">Delete
                 </button>
-                <!-- The Modal -->
-                <div id="myModal" class="modal">
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <span class="close">&times;</span>
-                            <h2>Authorisation Required</h2>
-                        </div>
-                        <div class="modal-body">
-                            <input type="password" name="password" id="input" class="form-control"
-                                   placeholder="Enter password to confirm action!" required autofocus>
-                        </div>
-                        <div class="modal-footer">
-                            <button>Confirm</button>
-                        </div>
+
             </form>
         </div>
 
