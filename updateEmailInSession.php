@@ -1,9 +1,9 @@
 <?php
 include ('conn.php');
 session_start();
-$_SESSION['studentID'] = $stuID ;
-if(isset($_POST['inputEmail']))
+if(isset($_POST['inputEmail']) && isset($_SESSION['StudentID']) )
 {
+    $stuID = $_SESSION['StudentID'] ;
     $nwEmail = mysqli_real_escape_string($conn, $_POST['inputEmail']);
     $nwEmail = stripslashes($nwEmail);
     $checkEmail = "SELECT * FROM users WHERE email='$nwEmail'";

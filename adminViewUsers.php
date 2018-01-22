@@ -5,7 +5,7 @@
     <?Php
     session_start();
     include 'conn.php';
-    $usersRetrieval = "SELECT * FROM users WHERE role='Member'";
+    $usersRetrieval = "SELECT * FROM users WHERE role='Member' ORDER BY 'studentID'";
     $userResult = mysqli_query($conn, $usersRetrieval);
     $adminRetrieval = "SELECT * FROM users WHERE role='Admin'";
     $adminResult = mysqli_query($conn, $adminRetrieval);
@@ -25,7 +25,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
-                <li><a href="#">Events</a></li>
+                <li><a href="events.php">Events</a></li>
                 <li><a href="Contact.php">Contact</a></li>
                 <li><a href="gallery.php">Gallery</a></li>
             </ul>
@@ -95,8 +95,8 @@
                     <td><?php echo $row['lastname']; ?></td>
                     <td><?php echo $row['info']; ?></td>
                     <td><?php echo $row['role']; ?></td>
-                    <td><a href="adminEditUser.php?edit_id=<?php echo $row['studentID'];?>" alt="edit"><span class="glyphicon glyphicon-edit"></span></a></td>
-                    <td><a href="adminDeleteUser.php?edit_id=<?php echo $row['studentID'];?>" alt="Delete" id="authorisation"><span class="glyphicon glyphicon-remove"></span></a></td>
+                    <td><a href="adminEditUser.php?edit_id=<?php echo $row['studentID'];?>" alt="edit" ><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><a href="deleteUser.php?edit_id=<?php echo $row['studentID'];?>" alt="Delete" ><span class="glyphicon glyphicon-remove"></span></a></td>
                 </tr>
                 <?php endwhile; ?>
             </table>
@@ -125,20 +125,12 @@
                     <td><?php echo $row1['lastname']; ?></td>
                     <td><?php echo $row1['info']; ?></td>
                     <td><?php echo $row1['role']; ?></td>
-                    <td><a href="adminEditUser.php?edit_id=<?php echo $row1['studentID'];?>" alt="edit"><span class="glyphicon glyphicon-edit"></span></a></td>
+                    <td><a href="adminEditUser.php?edit_id=<?php echo $row1['studentID'];?>" alt="edit" ><span class="glyphicon glyphicon-edit"></span></a></td>
                     <td><a href="deleteUser.php?edit_id=<?php echo $row1['studentID'];?>" alt="Delete" ><span class="glyphicon glyphicon-remove" ></span></a></td>
-
                 </tr>
             <?php endwhile; ?>
         </table>
     </div>
-
-
-
-
-
-
-
 <footer class="container-fluid text-center">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -148,15 +140,6 @@
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </footer>
 <script>
-        authenticate() {
-            var answer = confirm("Save data?")
-            if (answer) {
-                //some code
-            }
-            else {
-                //some code
-            }
-        }
 </script>
 
 </body>

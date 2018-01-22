@@ -3,11 +3,13 @@
 <head>
     <title>Cardiff Metropolitan Gaming Society</title>
     <?Php
-        session_start();
-        include 'conn.php';
-        $sql = "select * from contactmessages";
-        $result = mysqli_query($conn, $sql);
-        $numRows = mysqli_num_rows($result);
+    session_start();
+    include 'conn.php';
+    $sql = "SELECT * FROM contactmessages WHERE status='0'";
+    $result = mysqli_query($conn, $sql);
+    $numRows = mysqli_num_rows($result);
+
+
     ?>
 </head>
 <body>
@@ -24,7 +26,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
-                <li><a href="#">Events</a></li>
+                <li><a href="events.php">Events</a></li>
                 <li><a href="Contact.php">Contact</a></li>
                 <li><a href="gallery.php">Gallery</a></li>
             </ul>
@@ -35,16 +37,14 @@
                     ?>
                     <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
                     <?php
-                }
-                else if (isset($_SESSION['Firstname']) && ($_SESSION['Role'] == "Member"))
+                } else if (isset($_SESSION['Firstname']) && ($_SESSION['Role'] == "Member"))
                 {
                     ?>
                     <p class="navbar-text"><?php echo "Welcome " . $_SESSION['Firstname'] . "!"; ?></p>
                     <li><a href="userProfile.php">Profile</a></li>
                     <li><a href="signOut.php">Logout</a></li>
                     <?php
-                }
-                else if (isset($_SESSION['Firstname']) && ($_SESSION['Role'] == "Admin"))
+                } else if (isset($_SESSION['Firstname']) && ($_SESSION['Role'] == "Admin"))
                 {
                     ?>
                     <p class="navbar-text"><?php echo "Welcome " . $_SESSION['Firstname'] . "! (Admin)"; ?></p>
@@ -53,13 +53,14 @@
                     <li><a href="signOut.php">Logout</a></li>
                     <?php
                 }
-                ?>            </ul>
+                ?>
+            </ul>
         </div>
     </div>
 </nav>
 <br>
 <div class="container">
-    <h2><?php echo  $_SESSION['Firstname']. " ". $_SESSION['Lastname']. " " . "Account"; ?></h2>
+    <h2><?php echo $_SESSION['Firstname'] . " " . $_SESSION['Lastname'] . " " . "Account"; ?></h2>
     <br>
     <br>
     <div class="w3-row">
@@ -70,55 +71,94 @@
             <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Edit Information</div>
         </a>
         <a href="javascript:void(0)" onclick="openDetail(event, 'Messages');">
-            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Messages (<?php echo "$numRows"  ?>)</div>
+            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Messages (<?php echo "$numRows" ?>
+                )
+            </div>
         </a>
     </div>
     <div id="BasicInfo" class="w3-container detail" style="display:none">
-        <h2>Account</h2>
-        <h4><?php echo "<b>Email Address:</b>". " ". $_SESSION['Email'];?></h4>
-        <br>
-        <h4><?php echo "<b>Firstname:</b>". " ". $_SESSION['Firstname'];?></h4>
-        <br>
-        <h4><?php echo "<b>Lastname:</b>". " ". $_SESSION['Lastname'];?></h4>
-        <br>
-        <h4><?php echo "<b>Role:</b>". " ". $_SESSION['Role'];?></h4>
-        <br>
-        <h4><?php echo "<b>Student ID:</b>". " ". $_SESSION['StudentID'];?></h4>
-        <br>
-        <h4><?php echo "<b>Information:</b>". " ". $_SESSION['Information'];?></h4>
-    </div>
-    <div id="editInfo" class="w3-container detail" style="display:none">
-        <div class="col-sm-3">
-            <h2>Edit</h2>
-            <form class="form-editEmail" method="post" action="updateEmailInSession.php">
-                <h4>Edit Email</h4><input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="<?php echo $_SESSION['Email']; ?>" ><button>Edit</button>
-            </form>
-            <form class="form-editFirstnm" method="post" action="updateFirstnameToSession.php">
-                <h4>Firstname:</h4><input type="text" name="firstname" id="inputFname" class="form-control" placeholder="<?php echo $_SESSION['Firstname']; ?>" required><button>Update</button>
-            </form>
-            <form class="form-editLastnm" method="post" action="updateLastnameToSession.php">
-                <h4>Lastname</h4><input type="text" name="lastname" id="inputLname" class="form-control" placeholder="<?php echo $_SESSION['Lastname']; ?>" required><button>Update</button>
-            </form>
-            <form class="form-editInfo" method="post" action="addInfoToSession.php">
-                <h4>Information about you</h4><input type="text" name="inputInfo" id="inputInfo" class="form-control" placeholder="" ><button>Add</button>
-            </form>
+        <div class="container">
+            <h2>Account</h2>
+            <h4><?php echo "<b>Email Address:</b>" . " " . $_SESSION['Email']; ?></h4>
+            <br>
+            <h4><?php echo "<b>Firstname:</b>" . " " . $_SESSION['Firstname']; ?></h4>
+            <br>
+            <h4><?php echo "<b>Lastname:</b>" . " " . $_SESSION['Lastname']; ?></h4>
+            <br>
+            <h4><?php echo "<b>Role:</b>" . " " . $_SESSION['Role']; ?></h4>
+            <br>
+            <h4><?php echo "<b>Student ID:</b>" . " " . $_SESSION['StudentID']; ?></h4>
+            <br>
+            <h4><?php echo "<b>Information:</b>" . " " . $_SESSION['Information']; ?></h4>
+            <br>
         </div>
     </div>
-    <div id="Messages" class="w3-container detail" style="display: none">
+    <div id="editInfo" class="w3-container detail" style="display:none">
+        <div class="container">
+
+            <div class="col-sm-3">
+                <h2>Edit</h2>
+                <form action="updateEmailInSession.php" method="post">
+                    <div class="form-group">
+                        <label for="inputEmail" class="control-label">Edit Email</label>
+                        <input type="email" name="inputEmail" id="inputEmail" class="form-control"
+                               placeholder="<?php echo $_SESSION['Email']; ?>">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+                <form action="updateFirstnameToSession.php" method="post">
+                    <div class="form-group">
+                        <label for="inputFirstnm" class="control-label">Edit Firstname</label>
+                        <input type="email" name="inputFirstnm" id="inputFirstnm" class="form-control"
+                               placeholder="<?php echo $_SESSION['Firstname']; ?>">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+                <form action="updateLastnameToSession.php" method="post">
+                    <div class="form-group">
+                        <label for="inputLname" class="control-label">Edit Firstname</label>
+                        <input type="Text" name="inputLname" id="inputLname" class="form-control"
+                               placeholder="<?php echo $_SESSION['Firstname']; ?>">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+                <form class="form-editInfo" method="post" action="addInfoToSession.php">
+                    <h4>Information about you</h4><input type="text" name="inputInfo" id="inputInfo"
+                                                         class="form-control" placeholder="">
+                    <button>Add</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="Messages" class="w3-container detail" style="display:none">
+    <div class="container">
         <h2>Messages</h2>
-        <form class="form-contact" action="contactHandler.php" method="post" >
-            <span id="reauth-email" class="reauth-email"></span>
-            <br>
-            <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <br>
-            <input type="text" name="firstname" id="inputFname" class="form-control" placeholder="Firstname" required autofocus>
-            <br>
-            <input type="text" name="lastname" id="inputLname" class="form-control" placeholder="Lastname" required autofocus>
-            <br>
-            <input type="text" name="subject" id="inputSubject" class="form-control" placeholder="Subject" required autofocus>
-            <br>
-            <textarea name="Message" cols="74" rows="5" placeholder="Enter Message Here!" required autofocus></textarea>
-            <br>
+        <div class="row">
+            <table id="users">
+                <tr>
+                    <th>Email</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Subject</th>
+                    <th>Message</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                </tr>
+                <?php while ($row1 = mysqli_fetch_array($result)):; ?>
+                    <tr>
+                        <td><?php echo $row1['emailAddr']; ?></td>
+                        <td><?php echo $row1['firstname']; ?></td>
+                        <td><?php echo $row1['lastname']; ?></td>
+                        <td><?php echo $row1['subject']; ?></td>
+                        <td><?php echo $row1['message']; ?></td>
+                        <td><?php echo $row1['date']; ?></td>
+                        <td><?php echo $row1['status']; ?></td>
+                    </tr>
+                <?php endwhile; ?>
+            </table>
+        </div>
     </div>
 </div>
 <footer class="container-fluid text-center">

@@ -14,8 +14,8 @@ if (isset($_GET['edit_id']))
         exit();
     }
 }
-if (isset($_POST['btn-update']))
-{
+if (isset($_POST['btn-update']) && isset($_POST['studentEmail']) && isset($_POST['email']) && isset($_POST['firstname']) && isset($_POST['lastname']) && isset($_POST['Info']) && isset($_POST['role'])){
+
     $stuEmail = $_POST['studentEmail'];
     $email = $_POST['email'];
     $firstname = $_POST['firstname'];
@@ -29,7 +29,7 @@ if (isset($_POST['btn-update']))
         die("Error" . mysqli_connect_error());
     } else
     {
-        header("refresh:1.5; url=adminViewUsers.php");
+        header("refresh:1; url=adminViewUsers.php");
     }
 }
     ?>
@@ -52,7 +52,7 @@ if (isset($_POST['btn-update']))
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
-                <li><a href="#">Events</a></li>
+                <li><a href="events.php">Events</a></li>
                 <li><a href="Contact.php">Contact</a></li>
                 <li><a href="gallery.php">Gallery</a></li>
             </ul>
@@ -121,7 +121,7 @@ if (isset($_POST['btn-update']))
                     <option value="Member">Member</option>
                 </select>
                 <br>
-                <button class="btn btn-lg btn-primary btn-block btn-update" name="btn-update" id="btn-update" type="submit" onclick="update()">Register</button>
+                <button class="btn btn-lg btn-primary btn-block btn-update" name="btn-update" id="btn-update" type="submit">Edit</button>
                 <br>
                 <a href="adminViewUsers.php"><button class="btn btn-lg btn-primary btn-block btn-cancel" name="btn-cancel" id="btn-cancel">Cancel</button></a>
 
@@ -131,8 +131,6 @@ if (isset($_POST['btn-update']))
     </div>
 </div>
 </body>
-
-
 <footer class="container-fluid text-center">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -142,11 +140,5 @@ if (isset($_POST['btn-update']))
     <link rel="stylesheet" type="text/css" href="stylesheet.css">
 </footer>
 <script>
-function update(){
-    var x;
-    if (confirm("Updated Successfully") == true){
-            x="update";
-    }
-}
 </script>
 </html>

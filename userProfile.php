@@ -4,6 +4,11 @@
     <title>Cardiff Metropolitan Gaming Society</title>
     <?Php
         session_start();
+        include 'conn.php';
+        $usrEmail = $_SESSION['Email'];
+        $sql = "select * from contactmessages WHERE emailAddr='$usrEmail'";
+        $result = mysqli_query($conn, $sql);
+        $numRows = mysqli_num_rows($result);
     ?>
 </head>
 <body>
@@ -20,7 +25,7 @@
             <ul class="nav navbar-nav">
                 <li><a href="index.php">Home</a></li>
                 <li><a href="about.php">About</a></li>
-                <li><a href="#">Events</a></li>
+                <li><a href="events.php">Events</a></li>
                 <li><a href="Contact.php">Contact</a></li>
                 <li><a href="gallery.php">Gallery</a></li>
             </ul>
@@ -66,7 +71,7 @@
             <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Edit Information</div>
         </a>
         <a href="javascript:void(0)" onclick="openDetail(event, 'Messages');">
-            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Messages</div>
+            <div class="w3-third tablink w3-bottombar w3-hover-light-grey w3-padding">Messages (<?php echo "$numRows"  ?>)</div>
         </a>
     </div>
     <div id="BasicInfo" class="w3-container detail" style="display:none">
