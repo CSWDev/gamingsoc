@@ -109,7 +109,7 @@
                 <form action="updateFirstnameToSession.php" method="post">
                     <div class="form-group">
                         <label for="inputFirstnm" class="control-label">Edit Firstname</label>
-                        <input type="email" name="inputFirstnm" id="inputFirstnm" class="form-control"
+                        <input type="text" name="inputFirstnm" id="inputFirstnm" class="form-control"
                                placeholder="<?php echo $_SESSION['Firstname']; ?>">
                         <button type="submit" class="btn btn-primary">Edit</button>
                     </div>
@@ -118,14 +118,28 @@
                     <div class="form-group">
                         <label for="inputLname" class="control-label">Edit Firstname</label>
                         <input type="Text" name="inputLname" id="inputLname" class="form-control"
-                               placeholder="<?php echo $_SESSION['Firstname']; ?>">
+                               placeholder="<?php echo $_SESSION['Lastname']; ?>">
                         <button type="submit" class="btn btn-primary">Edit</button>
                     </div>
                 </form>
                 <form class="form-editInfo" method="post" action="addInfoToSession.php">
-                    <h4>Information about you</h4><input type="text" name="inputInfo" id="inputInfo"
-                                                         class="form-control" placeholder="">
-                    <button>Add</button>
+                    <div class="form-group">
+                        <label for="inputEdit" class="control-label">Edit Info</label>
+                        <input type="Text" name="inputEdit" id="inputEdit" class="form-control"
+                               placeholder="<?php echo $_SESSION['Information']; ?>">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+                <form class="form-editPass" method="post" action="editPassword.php">
+                    <div class="form-group">
+                        <label for="inputPass" class="control-label">Current Password</label>
+                        <input type="password" name="inputPass" id="inputPass" class="form-control"
+                               placeholder="Enter current password">
+                        <label for="inputPass2" class="control-label">New Password</label>
+                        <input type="password" name="inputPass2" id="inputPass2" class="form-control"
+                               placeholder="Enter new password">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
                 </form>
             </div>
         </div>

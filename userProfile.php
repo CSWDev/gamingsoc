@@ -89,20 +89,54 @@
         <h4><?php echo "<b>Information:</b>". " ". $_SESSION['Information'];?></h4>
     </div>
     <div id="editInfo" class="w3-container detail" style="display:none">
-        <div class="col-sm-3">
-        <h2>Edit</h2>
-            <form class="form-editEmail" method="post" action="updateEmailInSession.php">
-                <h4>Edit Email</h4><input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="<?php echo $_SESSION['Email']; ?>" ><button>Edit</button>
-            </form>
-            <form class="form-editFirstnm" method="post" action="updateFirstnameToSession.php">
-                <h4>Firstname:</h4><input type="text" name="firstname" id="inputFname" class="form-control" placeholder="<?php echo $_SESSION['Firstname']; ?>" required><button>Update</button>
-            </form>
-            <form class="form-editLastnm" method="post" action="updateLastnameToSession.php">
-                <h4>Lastname</h4><input type="text" name="lastname" id="inputLname" class="form-control" placeholder="<?php echo $_SESSION['Lastname']; ?>" required><button>Update</button>
-            </form>
-            <form class="form-editInfo" method="post" action="addInfoToSession.php">
-                <h4>Information about you</h4><input type="text" name="inputInfo" id="inputInfo" class="form-control" placeholder="" ><button>Add</button>
-            </form>
+        <div class="container">
+
+            <div class="col-sm-3">
+                <h2>Edit</h2>
+                <form action="updateEmailInSession.php" method="post">
+                    <div class="form-group">
+                        <label for="inputEmail" class="control-label">Edit Email</label>
+                        <input type="email" name="inputEmail" id="inputEmail" class="form-control"
+                               placeholder="<?php echo $_SESSION['Email']; ?>">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+                <form action="updateFirstnameToSession.php" method="post">
+                    <div class="form-group">
+                        <label for="inputFirstnm" class="control-label">Edit Firstname</label>
+                        <input type="text" name="inputFirstnm" id="inputFirstnm" class="form-control"
+                               placeholder="<?php echo $_SESSION['Firstname']; ?>">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+                <form action="updateLastnameToSession.php" method="post">
+                    <div class="form-group">
+                        <label for="inputLname" class="control-label">Edit Firstname</label>
+                        <input type="Text" name="inputLname" id="inputLname" class="form-control"
+                               placeholder="<?php echo $_SESSION['Lastname']; ?>">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+                <form class="form-editInfo" method="post" action="addInfoToSession.php">
+                    <div class="form-group">
+                        <label for="inputEdit" class="control-label">Edit Info</label>
+                        <input type="Text" name="inputEdit" id="inputEdit" class="form-control"
+                               placeholder="<?php echo $_SESSION['Information']; ?>">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+                <form class="form-editPass" method="post" action="editPassword.php">
+                    <div class="form-group">
+                        <label for="inputPass" class="control-label">Current Password</label>
+                        <input type="password" name="inputPass" id="inputPass" class="form-control"
+                               placeholder="Enter current password">
+                        <label for="inputPass2" class="control-label">New Password</label>
+                        <input type="password" name="inputPass2" id="inputPass2" class="form-control"
+                               placeholder="Enter new password">
+                        <button type="submit" class="btn btn-primary">Edit</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
     <div id="Messages" class="w3-container detail" style="display: none">
