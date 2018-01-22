@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
     <title>Cardiff Metropolitan Gaming Society</title>
-    <?Php
-    session_start();
-    ?>
+
 </head>
 <body>
 <nav class="navbar navbar-inverse">
@@ -80,10 +78,15 @@
                     <input type="checkbox" value="remember-me"> Remember me
                 </label>
             </div>
+            <div class="captcha_wrapper">
+                <div class="g-recaptcha" data-sitekey="6Le6iTgUAAAAAKMZbGOuDgA5F1mrnMWEv1dcx8Eu"></div>
+            </div>
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+
+
         </form><!-- /form -->
         <hr>
-        <a href="#" class="forgot-password">
+        <a href="sendMailTo.php" class="forgot-password">
             Forgot the password?
         </a>
         <br>
@@ -93,10 +96,6 @@
 
     </div><!-- /card-container -->
 </div><!-- /container -->
-
-
-
-
 
 <footer class="container-fluid text-center">
     <meta charset="utf-8">
