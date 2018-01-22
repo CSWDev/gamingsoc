@@ -3,7 +3,7 @@ include("conn.php");
 session_start();
 if ($_SERVER['REQUEST_METHOD'] == "POST")
 {
-    if (isset($_POST['email']) && isset($_POST['password'])) // Like that for example
+    if (isset($_POST['email']) && isset($_POST['password'])) 
     {
         $myemail = mysqli_real_escape_string($conn, $_POST['email']);
         $myemail = stripslashes($myemail);
